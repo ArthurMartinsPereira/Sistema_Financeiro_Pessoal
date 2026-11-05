@@ -1,0 +1,9 @@
+[
+    {
+        "desc": "Testando sistema",
+        "tipo": "receita",
+        "categoria": "teste",
+        "valor": 1000.0,
+        "data": "05/11/2026"
+    }
+]
