@@ -76,8 +76,10 @@ class ControleFinanceiro:
                     print("Data invalida!")
                     continue
 
-                if valor <= 0 or desc.strip() == "" or categoria.strip() == "":
+                if valor <= 0:
                     print("Valor inválido!")
+                elif desc.strip() == "" or categoria.strip() == "":
+                    print("Insira os campos descrição/categoria!")
                 else:
                     break
 
@@ -98,7 +100,7 @@ class ControleFinanceiro:
     def listar_movimentacoes(self):
         print("---- Movimentações Cadastradas ----")
         if not self.movimentacoes:
-            print("Nenhuma moviemntação cadastrada!")
+            print("Nenhuma movimentação cadastrada!!")
             return
         for movimentacao in self.movimentacoes:
             print(f"Descrição: {movimentacao['desc']}")
@@ -109,7 +111,43 @@ class ControleFinanceiro:
             print("\n---------------------------------")
 
     def buscar_movimentacao(self):
-        pass
+        if not self.movimentacoes:
+            print("Não existem movimentações cadastradas!")
+            return
+        print("Você deseja buscar por categoria(1) ou descrição(2)?")
+        while True:
+            try:
+                c = int(input("Digite sua opcao: "))
+                if c == 1:
+                    encontrado = False
+                    termo = input("Digite a categoria que deseja buscar: ").lower().strip()
+                    for movimentacao in self.movimentacoes:
+                        if termo in movimentacao['categoria'].lower():
+                            encontrado = True
+                            print(movimentacao)
+                    if not encontrado:
+                        print("Nenhuma movimentação encontrada!")
+
+                    break
+
+                elif c == 2:
+                    encontrado = False
+                    termo = input("Digite a descrição que deseja buscar: ").lower().strip()
+                    for movimentacao in self.movimentacoes:
+                        if termo in movimentacao['desc'].lower():
+                            encontrado = True
+                            print(movimentacao)
+                    if not encontrado:
+                        print("Nenhuma movimentação encontrada!")
+
+                    break
+
+                else:
+                    print("Opcao invalida!")
+
+            except ValueError:
+                print("Opcao invalida!")
+
 
     def remover_movimentacao(self):
         pass
