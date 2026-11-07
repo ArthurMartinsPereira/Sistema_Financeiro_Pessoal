@@ -121,6 +121,9 @@ class ControleFinanceiro:
                 if c == 1:
                     encontrado = False
                     termo = input("Digite a categoria que deseja buscar: ").lower().strip()
+                    if not termo:
+                        print("O termo de pesquisa não pode estar vazio!")
+                        continue
                     for movimentacao in self.movimentacoes:
                         if termo in movimentacao['categoria'].lower():
                             encontrado = True
@@ -133,6 +136,9 @@ class ControleFinanceiro:
                 elif c == 2:
                     encontrado = False
                     termo = input("Digite a descrição que deseja buscar: ").lower().strip()
+                    if not termo:
+                        print("O termo de pesquisa não pode estar vazio!")
+                        continue
                     for movimentacao in self.movimentacoes:
                         if termo in movimentacao['desc'].lower():
                             encontrado = True
@@ -150,7 +156,33 @@ class ControleFinanceiro:
 
 
     def remover_movimentacao(self):
-        pass
+        if self.movimentacoes:
+            for indice, movimentacao in enumerate(self.movimentacoes, start=1):
+                print(f"Indice: {indice}")
+                print(movimentacao)
+                print("-------------------------")
+
+        else:
+            print("Nenhuma movimentação registrada!")
+            return
+        try:
+            c = int(input("Digite o indice da movimentação que deseja remover: "))
+            if 1 <= c <= len(self.movimentacoes):
+                conf = input(f"Deseja reamente remover {c}?(S/N): ").strip().upper()
+                if conf == "S":
+                    print("Moviemntação removida...")
+                    self.movimentacoes.pop(c - 1)
+                    self.salvar_movimentacao()
+                elif conf == "N":
+                    print("Concelando remoção...")
+                    return self.remover_movimentacao()
+                else:
+                    print("Opcao invalida!")
+            else:
+                print("Indice inexistente!")
+        except ValueError:
+            print("Indice Inválido!")
+
 
     def consultar_saldo(self):
         pass
