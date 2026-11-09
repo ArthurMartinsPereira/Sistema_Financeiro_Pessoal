@@ -185,10 +185,34 @@ class ControleFinanceiro:
 
 
     def consultar_saldo(self):
-        pass
+        total_despesa = 0
+        total_receita = 0
+        for movimentacao in self.movimentacoes:
+            if movimentacao['tipo'] == 'despesa':
+                total_despesa += movimentacao['valor']
+            elif movimentacao['tipo'] == 'receita':
+                total_receita += movimentacao['valor']
+
+        print(f"Despesa: R${total_despesa:.2f}")
+        print(f"Receita: R${total_receita:.2f}")
+        print(f"Saldo Total: R${total_receita - total_despesa:.2f}")
+
 
     def relatorios(self):
-        pass
+        print("=== Relatório de Despesas ===")
+        relatorio = {}
+        for movimentacao in self.movimentacoes:
+            if movimentacao['tipo'] == 'despesa':
+                categoria = movimentacao['categoria']
+                if categoria not in relatorio:
+                    relatorio[categoria] = 0
+                relatorio[categoria] += movimentacao['valor']
+
+                if not movimentacao['tipo'] == 'despesa':
+                    print("Sem despesas cadastradas!")
+
+        for categoria, valor in relatorio.items():
+            print(f"Categoria: {categoria}: R${valor:.2f}")
 
 
 sistema = ControleFinanceiro()
